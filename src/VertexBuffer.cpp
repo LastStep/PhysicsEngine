@@ -1,15 +1,15 @@
 #include <Graphics/VertexBuffer.h>
-#include <Graphics/Renderer.h>
+#include <Graphics/GLCore.h>
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
     : m_RendererID(0)
 {
     GLCall(glGenBuffers(1, &m_RendererID));
-    Bind();
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW));
 };
 
-VertexBuffer::~VertexBuffer()
+void VertexBuffer::DeleteVertexBuffer()
 {
     GLCall(glDeleteBuffers(GL_ARRAY_BUFFER, &m_RendererID));
 };

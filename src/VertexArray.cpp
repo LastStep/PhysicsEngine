@@ -1,4 +1,6 @@
+#include <iostream>
 #include <Graphics/VertexArray.h>
+#include <Graphics/GLCore.h>
 
 VertexArray::VertexArray()
 	: m_RendererID(0)
@@ -11,7 +13,7 @@ VertexArray::~VertexArray()
 	GLCall(glDeleteVertexArrays(1, &m_RendererID));
 }
 
-void VertexArray::AddBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& vertexBufferLayout)
+void VertexArray::AddBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& vertexBufferLayout)
 {
 	Bind();
 	vertexBuffer.Bind();
@@ -26,11 +28,12 @@ void VertexArray::AddBuffer(const VertexBuffer& vertexBuffer, const VertexBuffer
 			vertexBufferLayout.GetStride(), (const void*)attributeOffset));
 		attributeOffset += vertexBufferElement.GetOffsetOfElement();
 	}
+	vertexBuffer.Unbind();
 }
 
 void VertexArray::Bind() const
 {
-	GLCall(glBindVertexArray( m_RendererID));
+	GLCall(glBindVertexArray(m_RendererID));
 };
 
 void VertexArray::Unbind() const

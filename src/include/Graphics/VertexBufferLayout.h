@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <Graphics/Renderer.h>
+#include <Graphics/GLCore.h>
 
 struct VertexBufferElement
 {
@@ -39,7 +39,7 @@ public:
 	template<typename T>
 	void Push(unsigned int count)
 	{
-		static_assert(false);
+		static_assert(T == 1);
 	}
 
 	template<>

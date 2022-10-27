@@ -1,8 +1,9 @@
-#include <Graphics/Shader.h>
-#include <Graphics/Renderer.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <array>
+#include <Graphics/Shader.h>
+#include <Graphics/GLCore.h>
 
 
 Shader::Shader(const std::string& filepath)
@@ -96,16 +97,21 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 void Shader::Bind() const
 {
 	GLCall(glUseProgram(m_RendererID));
-};
+}
 
 void Shader::Unbind() const
 {
 	GLCall(glUseProgram(0));
-};
+}
 
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+void Shader::SetUniform4fv(const std::string& name, glm::vec4 values)
 {
-	GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+	GLCall(glUniform4fv(GetUniformLocation(name), 1, glm::value_ptr(values)));
+}
+
+void Shader::SetUniformMatrix4f(const std::string& name, const glm::mat4& values)
+{
+	GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(values)));
 }
 
 unsigned int Shader::GetUniformLocation(const std::string& name)
