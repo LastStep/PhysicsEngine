@@ -3,7 +3,7 @@
 #include <sstream>
 #include <array>
 #include <Graphics/Shader.h>
-#include <Graphics/GLCore.h>
+#include <Core/GLCore.h>
 
 
 Shader::Shader(const std::string& filepath)

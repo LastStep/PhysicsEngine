@@ -1,5 +1,5 @@
 #include <Graphics/Mesh.h>
-#include <Graphics/GLCore.h>
+#include <Core/GLCore.h>
 #include <Graphics/VertexBuffer.h>
 #include <Graphics/IndexBuffer.h>
 #include <Graphics/VertexBufferLayout.h>

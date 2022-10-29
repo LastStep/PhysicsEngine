@@ -1,5 +1,5 @@
 #include <Graphics/VertexBuffer.h>
-#include <Graphics/GLCore.h>
+#include <Core/GLCore.h>
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
     : m_RendererID(0)

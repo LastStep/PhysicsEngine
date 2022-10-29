@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Graphics/VertexArray.h>
-#include <Graphics/GLCore.h>
+#include <Core/GLCore.h>
 
 VertexArray::VertexArray()
 	: m_RendererID(0)

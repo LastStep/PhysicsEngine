@@ -1,50 +1,47 @@
 #include <iostream>
 
 #include <Graphics/Renderer.h>
-#include <Graphics/Mesh.h>
-
-std::vector<MeshSquare*> MeshArray;
 
 
 Renderer::Renderer()
 {
 }
 
-Renderer::~Renderer()
+void Renderer::Delete()
 {
-    for (MeshSquare* mesh : MeshArray)
+    for (MeshSquare* mesh : m_MeshArray)
     {
         delete mesh;
     }
 }
 
-void Renderer::Clear()
+void Renderer::Clear(std::optional<ImVec4> clearColor)
 {
+    if (!clearColor) clearColor = m_ClearColor;
+    glClearColor(clearColor->x * clearColor->w, clearColor->y * clearColor->w, clearColor->z * clearColor->w, clearColor->w);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Renderer::Draw()
 {
-    for (MeshSquare* mesh : MeshArray)
+    for (MeshSquare* mesh : m_MeshArray)
     {
         mesh->Draw();
     }
 }
 
-void Renderer::HandleEvent(Event eventType, std::unordered_map<std::string, void*> eventData)
+void Renderer::OnEvent(EventType eventType, EventData eventData)
 {
     switch (eventType)
     {
-        case Event::KEYBOARD:
-            break;
-        case Event::MOUSE:
-            break;
+        case EventType::KEYBOARD:
+            Renderer::HandleKeyboardEventOpenGL(eventData.GLFW_window, eventData.Keyboad_Key, 0, eventData.Event_Action, 0);
+        case EventType::MOUSE:
+            Renderer::HandleMouseEventOpenGL(eventData.GLFW_window, eventData.Mouse_Button, eventData.Event_Action, 0);
         default:
             break;
     }
 }
-
-
 
 void Renderer::HandleKeyboardEventOpenGL(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -63,6 +60,6 @@ void Renderer::HandleMouseEventOpenGL(GLFWwindow* window, int button, int action
         meshSquareAttr.position = { (float)xpos, (float)ypos, 0.0f };
         meshSquareAttr.dimensions = { 100.05f, 100.05f };
 
-        MeshArray.push_back(new MeshSquare(meshSquareAttr));
+        m_MeshArray.push_back(new MeshSquare(meshSquareAttr));
     }
 }

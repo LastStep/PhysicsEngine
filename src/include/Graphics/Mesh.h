@@ -14,7 +14,7 @@ struct MeshRectangleAttributes
 {
 	glm::vec3 position;
 	glm::vec2 dimensions;
-	glm::vec4 color = { 0.6f, 0.3f, 0.8f, 1.0f };
+	glm::vec4 color = { 0.8f, 0.2f, 0.4f, 1.0f };
 };
 
 
