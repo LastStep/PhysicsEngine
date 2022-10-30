@@ -10,23 +10,24 @@
 
 #include <Core/Event.h>
 #include <Graphics/Mesh.h>
+#include <Util/OrthographicCameraController.h>
 
 
 class Renderer
 {
 private:
     std::vector<MeshSquare*> m_MeshArray;
-	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); 
+	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 public:
     Renderer();
     void Delete();
     void Clear(std::optional<ImVec4> clearColor = std::nullopt);
-    void Draw();
+    void Draw(OrthographicCameraController* cameraController);
     void OnEvent(EventType eventType, EventData eventData);
 
 protected:
-    void HandleKeyboardEventOpenGL(GLFWwindow* window, int key, int scancode, int action, int mods);
-    void HandleMouseEventOpenGL(GLFWwindow* window, int button, int action, int mods);
+    void HandleKeyboardEvent(EventData eventData);
+    void HandleMouseEvent(EventData eventData);
 
 };

@@ -37,14 +37,12 @@ MeshSquare::~MeshSquare()
 {
 }
 
-void MeshSquare::Draw()
+void MeshSquare::Draw(OrthographicCameraController* cameraController)
 {
     m_Shader.Bind();
     m_Shader.SetUniform4fv("u_Color", m_MeshRectangleAttributes.color);
 
-    glm::mat4 proj = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f, -1.0f, 1.0f);
-    //glm::mat4 proj = glm::translate(glm::mat4(1.0f), m_MeshRectangleAttributes.position);
-    m_Shader.SetUniformMatrix4f("u_ViewProjection", proj);
+    m_Shader.SetUniformMatrix4f("u_ViewProjection", cameraController->GetCamera().GetViewProjectionMatrix());
 
     m_VertexArray.Bind();
 

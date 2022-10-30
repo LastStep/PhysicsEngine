@@ -7,16 +7,22 @@
 enum class EventType
 {
     NONE = 0,
+    WINDOW,
     KEYBOARD,
     MOUSE
 };
 
 struct EventData
 {
-    GLFWwindow* GLFW_window;
-    int Keyboad_Key;
-    int Mouse_Button;
+    GLFWwindow* GLFW_Window;
     int Event_Action;
+
+    float Window_Height;
+    float Window_Width;
+    
+    int Keyboad_Key;
+    
+    int Mouse_Button;
 };
 
 

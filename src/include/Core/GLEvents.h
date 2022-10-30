@@ -6,33 +6,39 @@
 
 
 namespace GLEvent {
-    void CallbackKeyboardEventOpenGL(GLFWwindow* window, int key, int scancode, int action, int mods)
+    // Window Events
+    void CallbackOpenGLWindowResizeEvent(GLFWwindow* GLFW_window, int width, int height)
     {
         EventData eventData{};
-        eventData.GLFW_window = window;
+        eventData.GLFW_Window = GLFW_window;
+        eventData.Window_Width = (float)width;
+        eventData.Window_Height = (float)height;
+
+        Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
+        W_window->GetCameraController()->OnEvent(EventType::WINDOW, eventData);
+    }
+
+    // Keyboard Events
+    void CallbackOpenGLKeyboardEvent(GLFWwindow* GLFW_window, int key, int scancode, int action, int mods)
+    {
+        EventData eventData{};
+        eventData.GLFW_Window = GLFW_window;
         eventData.Keyboad_Key = key;
         eventData.Event_Action = action;
 
-        GLFWUserPointerData* UserPointerData = (GLFWUserPointerData*)glfwGetWindowUserPointer(window);
-        UserPointerData->o_Renderer->OnEvent(EventType::KEYBOARD, eventData);
+        Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
+        W_window->GetRenderer()->OnEvent(EventType::KEYBOARD, eventData);
     }
 
-    void CallbackMouseEventOpenGL(GLFWwindow* window, int button, int action, int mods)
+    // Mouse Events
+    void CallbackOpenGLMouseEvent(GLFWwindow* GLFW_window, int button, int action, int mods)
     {
-        // Handling imgui input first
-        ImGuiIO& io = ImGui::GetIO();
-        io.AddMouseButtonEvent(button, action == GLFW_PRESS);
+        EventData eventData{};
+        eventData.GLFW_Window = GLFW_window;
+        eventData.Mouse_Button = button;
+        eventData.Event_Action = action;
 
-        // Stopping event propogation from imgui to glfw
-        if (!io.WantCaptureMouse)
-        {
-            EventData eventData{};
-            eventData.GLFW_window = window;
-            eventData.Mouse_Button = button;
-            eventData.Event_Action = action;
-
-            GLFWUserPointerData* UserPointerData = (GLFWUserPointerData*)glfwGetWindowUserPointer(window);
-            UserPointerData->o_Renderer->OnEvent(EventType::MOUSE, eventData);
-        }
+        Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
+        W_window->GetRenderer()->OnEvent(EventType::MOUSE, eventData);
     }
 }

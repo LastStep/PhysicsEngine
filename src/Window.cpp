@@ -2,6 +2,7 @@
 #include <Core/GLEvents.h>
 
 Window::Window()
+    : m_CameraController(m_Width, m_Height)
 {
     /* Initialize the library */
     if (!glfwInit()) Window::Delete();
@@ -21,14 +22,12 @@ Window::Window()
     //glMatrixMode(GL_PROJECTION);
     //glOrtho(0, m_Width, 0, m_Height, -1, 1);
 
-    // Store contextual data, to retrive later
-    GLFWUserPointerData UserPointerData{};
-    UserPointerData.o_Renderer = &m_Renderer;
-    glfwSetWindowUserPointer(m_Window, &UserPointerData);
+    glfwSetWindowUserPointer(m_Window, this);
 
     // Event callbacks
-    glfwSetKeyCallback(m_Window, GLEvent::CallbackKeyboardEventOpenGL);
-    glfwSetMouseButtonCallback(m_Window, GLEvent::CallbackMouseEventOpenGL);
+    glfwSetWindowSizeCallback(m_Window, GLEvent::CallbackOpenGLWindowResizeEvent);
+    glfwSetKeyCallback(m_Window, GLEvent::CallbackOpenGLKeyboardEvent);
+    glfwSetMouseButtonCallback(m_Window, GLEvent::CallbackOpenGLMouseEvent);
     
     // Setup Dear ImGui context
     ImGui::CreateContext();
@@ -67,7 +66,7 @@ void Window::Draw()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    m_Renderer.Draw();
+    m_Renderer.Draw(&m_CameraController);
 
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
     ImGui::ShowDemoWindow();

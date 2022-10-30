@@ -3,15 +3,12 @@
 #include <string>
 #include <Core/GLCore.h>
 #include <Graphics/Renderer.h>
+#include <Util/OrthographicCameraController.h>
 
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
 
-
-struct GLFWUserPointerData {
-	Renderer* o_Renderer;
-};
 
 
 class Window
@@ -23,6 +20,7 @@ private:
 	Renderer m_Renderer;
 	GLFWwindow* m_Window;
 	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); 
+	OrthographicCameraController m_CameraController;
 
 public:
 	Window();
@@ -34,7 +32,8 @@ public:
 	inline uint32_t		GetHeight()		const { return m_Height;	 }
 	inline const char*  GetTitle()		const { return m_Title;		 }
 	inline ImVec4		GetClearColor() const { return m_ClearColor; }
-
+	inline Renderer* GetRenderer() { return &m_Renderer; }
+	inline OrthographicCameraController* GetCameraController() { return &m_CameraController; }
 
 protected:
 	void Draw();

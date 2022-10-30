@@ -22,11 +22,11 @@ void Renderer::Clear(std::optional<ImVec4> clearColor)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::Draw()
+void Renderer::Draw(OrthographicCameraController* cameraController)
 {
     for (MeshSquare* mesh : m_MeshArray)
     {
-        mesh->Draw();
+        mesh->Draw(cameraController);
     }
 }
 
@@ -35,29 +35,36 @@ void Renderer::OnEvent(EventType eventType, EventData eventData)
     switch (eventType)
     {
         case EventType::KEYBOARD:
-            Renderer::HandleKeyboardEventOpenGL(eventData.GLFW_window, eventData.Keyboad_Key, 0, eventData.Event_Action, 0);
+            Renderer::HandleKeyboardEvent(eventData);
         case EventType::MOUSE:
-            Renderer::HandleMouseEventOpenGL(eventData.GLFW_window, eventData.Mouse_Button, eventData.Event_Action, 0);
+            Renderer::HandleMouseEvent(eventData);
         default:
             break;
     }
 }
 
-void Renderer::HandleKeyboardEventOpenGL(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Renderer::HandleKeyboardEvent(EventData eventData)
 {
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    if (eventData.Keyboad_Key == GLFW_KEY_SPACE && eventData.Event_Action == GLFW_PRESS)
+        glfwSetWindowShouldClose(eventData.GLFW_Window, GLFW_TRUE);
 }
 
-void Renderer::HandleMouseEventOpenGL(GLFWwindow* window, int button, int action, int mods)
+void Renderer::HandleMouseEvent(EventData eventData)
 {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    // Handling imgui input first
+    ImGuiIO& io = ImGui::GetIO();
+    io.AddMouseButtonEvent(eventData.Mouse_Button, eventData.Event_Action == GLFW_PRESS);
+
+    // Stopping event propogation from imgui to glfw
+    if (io.WantCaptureMouse) return;
+
+    if (eventData.Mouse_Button == GLFW_MOUSE_BUTTON_LEFT && eventData.Event_Action == GLFW_PRESS)
     {
         double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
+        glfwGetCursorPos(eventData.GLFW_Window, &xpos, &ypos);
 
         MeshRectangleAttributes meshSquareAttr{};
-        meshSquareAttr.position = { (float)xpos, (float)ypos, 0.0f };
+        meshSquareAttr.position   = { (float)xpos, (float)ypos, 0.0f };
         meshSquareAttr.dimensions = { 100.05f, 100.05f };
 
         m_MeshArray.push_back(new MeshSquare(meshSquareAttr));

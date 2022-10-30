@@ -6,6 +6,7 @@
 #include <Graphics/VertexArray.h>
 #include <Graphics/Shader.h>
 #include <glm/glm.hpp>
+#include <Util/OrthographicCameraController.h>
 
 int const SQUARE_POINTS = 8;
 
@@ -35,7 +36,7 @@ public:
 	MeshSquare(MeshRectangleAttributes meshRectangleAttributes);
 	~MeshSquare();
 
-	void Draw();
+	void Draw(OrthographicCameraController* cameraController);
 
 	inline std::array<float, SQUARE_POINTS> GetPositions() const { return m_Positions; }
 	inline VertexArray GetVertexArray() { return m_VertexArray; }
