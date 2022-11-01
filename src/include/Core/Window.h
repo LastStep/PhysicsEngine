@@ -4,6 +4,7 @@
 #include <Core/GLCore.h>
 #include <Graphics/Renderer.h>
 #include <Util/OrthographicCameraController.h>
+#include <Core/Event.h>
 
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
@@ -28,6 +29,8 @@ public:
 
 	void Run();
 
+	void OnEvent(EventType eventType, EventData eventData);
+
 	inline uint32_t		GetWidth()		const { return m_Width;		 }
 	inline uint32_t		GetHeight()		const { return m_Height;	 }
 	inline const char*  GetTitle()		const { return m_Title;		 }
@@ -37,5 +40,6 @@ public:
 
 protected:
 	void Draw();
-
+	void HandleWindowResizeEvent(EventData eventData);
+	void HandleMouseScrollEvent(EventData eventData);
 };

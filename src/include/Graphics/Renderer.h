@@ -26,6 +26,7 @@ public:
     void Draw(OrthographicCameraController* cameraController);
     void OnEvent(EventType eventType, EventData eventData);
 
+    inline std::vector<MeshSquare*> GetMeshArray() { return m_MeshArray; }
 protected:
     void HandleKeyboardEvent(EventData eventData);
     void HandleMouseEvent(EventData eventData);

@@ -6,6 +6,7 @@ OrthographicCameraController::OrthographicCameraController(float width, float he
 		m_Height(height),
 		m_AspectRatio(m_Width / m_Height),
 		m_Camera(0.0f, m_Width * m_ZoomLevel, m_Height * m_ZoomLevel, 0.0f),
+		//m_Camera(-m_AspectRatio * m_ZoomLevel, m_Width * m_ZoomLevel, -m_Height * m_ZoomLevel, m_Height * m_ZoomLevel),
 		m_Rotation(rotation)
 {
 }
@@ -58,18 +59,16 @@ void OrthographicCameraController::OnEvent(EventType eventType, EventData eventD
 {
 	switch (eventType)
 	{
-		case EventType::WINDOW:
-			OrthographicCameraController::HandleWindowEvent(eventData);
-		case EventType::KEYBOARD:
-			OrthographicCameraController::HandleKeyboardEvent(eventData);
-		case EventType::MOUSE:
-			OrthographicCameraController::HandleMouseEvent(eventData);
+		case EventType::WINDOW_RESIZE:
+			OrthographicCameraController::HandleWindowResizeEvent(eventData);
+		case EventType::MOUSE_SCROLL:
+			OrthographicCameraController::HandleMouseScrollEvent(eventData);
 		default:
 			break;
 	}
 }
 
-void OrthographicCameraController::HandleWindowEvent(EventData eventData)
+void OrthographicCameraController::HandleWindowResizeEvent(EventData eventData)
 {
 	m_Width = eventData.Window_Width;
 	m_Height = eventData.Window_Height;
@@ -77,13 +76,11 @@ void OrthographicCameraController::HandleWindowEvent(EventData eventData)
 	m_Camera.SetProjection(0.0f, m_Width * m_ZoomLevel, m_Height * m_ZoomLevel, 0.0f);
 }
 
-void OrthographicCameraController::HandleKeyboardEvent(EventData eventData)
+void OrthographicCameraController::HandleMouseScrollEvent(EventData eventData)
 {
-}
+	//m_ZoomLevel -= eventData.Scroll_YOffset * m_ZoomMagnitude;
+	//m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
+	//m_Camera.SetProjection(-m_Width * m_ZoomLevel, m_Width * m_ZoomLevel, - m_Height * m_ZoomLevel, m_Height * m_ZoomLevel);
+	//m_Camera.SetProjection(0.0f, m_Width * m_ZoomLevel, m_Height * m_ZoomLevel, 0.0f);
 
-void OrthographicCameraController::HandleMouseEvent(EventData eventData)
-{
-	/*m_ZoomLevel -= e.GetYOffset() * 0.25f;
-	m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
-	m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);*/
 }

@@ -18,17 +18,22 @@ Window::Window()
 
     if (glewInit() != GLEW_OK) Window::Delete();
 
-    //glViewport(0, 0, m_Width, m_Height);
-    //glMatrixMode(GL_PROJECTION);
-    //glOrtho(0, m_Width, 0, m_Height, -1, 1);
+    /*float zoomLevel = m_CameraController.GetZoomLevel();
+    glViewport(
+        -1.0f * m_Width / 2.0f * zoomLevel, 
+        -1.0f * m_Height / 2.0f * zoomLevel, 
+        +1.0f * m_Width / 2.0f * zoomLevel,
+        +1.0f * m_Height / 2.0f * zoomLevel
+    )*/;
 
     glfwSetWindowUserPointer(m_Window, this);
 
     // Event callbacks
     glfwSetWindowSizeCallback(m_Window, GLEvent::CallbackOpenGLWindowResizeEvent);
     glfwSetKeyCallback(m_Window, GLEvent::CallbackOpenGLKeyboardEvent);
-    glfwSetMouseButtonCallback(m_Window, GLEvent::CallbackOpenGLMouseEvent);
-    
+    glfwSetMouseButtonCallback(m_Window, GLEvent::CallbackOpenGLMouseClickEvent);
+    glfwSetScrollCallback(m_Window, GLEvent::CallbackOpenGLMouseScrollEvent);
+
     // Setup Dear ImGui context
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -58,6 +63,19 @@ void Window::Run()
     Window::Delete();
 }
 
+void Window::OnEvent(EventType eventType, EventData eventData)
+{
+    switch (eventType)
+    {
+        case EventType::WINDOW_RESIZE:
+            Window::HandleWindowResizeEvent(eventData);
+        case EventType::MOUSE_SCROLL:
+            Window::HandleMouseScrollEvent(eventData);
+        default:
+            break;
+    }
+}
+
 void Window::Draw()
 {
     m_Renderer.Clear(m_ClearColor);
@@ -76,19 +94,21 @@ void Window::Draw()
         static float f = 0.0f;
         static int counter = 0;
 
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+        std::vector<MeshSquare*> meshArray = m_Renderer.GetMeshArray();
 
-        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+        ImGui::Begin("Mesh Counter");          
+        ImGui::Text("Number of Meshes = %d", meshArray.size());
+            //glm::vec4 meshColor = ;
+        
+        for (int i = 0; i < meshArray.size(); i++)
+        {
+            ImGui::PushID(i);
+            ImGui::ColorEdit4("clear color", (float*)meshArray[i]->GetColor());
+            ImGui::PopID();
+        }
 
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-        ImGui::ColorEdit3("clear color", (float*)&m_ClearColor); // Edit 3 floats representing a color
+        //ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 
-        if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-            counter++;
-        ImGui::SameLine();
-        ImGui::Text("counter = %d", counter);
-
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
     }
 
@@ -100,4 +120,17 @@ void Window::Draw()
 
     /* Poll for and process events */
     glfwPollEvents();
+}
+
+void Window::HandleWindowResizeEvent(EventData eventData)
+{
+    m_Width = eventData.Window_Width;
+    m_Height = eventData.Window_Height;
+    glViewport(0, 0, m_Width, m_Height);
+}
+
+void Window::HandleMouseScrollEvent(EventData eventData)
+{
+    //float zoomLevel = m_CameraController.GetZoomLevel();
+    //glViewport(0, 0, m_Width * zoomLevel, m_Height * zoomLevel);
 }

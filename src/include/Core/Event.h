@@ -7,9 +7,10 @@
 enum class EventType
 {
     NONE = 0,
-    WINDOW,
+    WINDOW_RESIZE,
     KEYBOARD,
-    MOUSE
+    MOUSE_CLICK,
+    MOUSE_SCROLL
 };
 
 struct EventData
@@ -23,6 +24,8 @@ struct EventData
     int Keyboad_Key;
     
     int Mouse_Button;
+    double Scroll_XOffset;
+    double Scroll_YOffset;
 };
 
 

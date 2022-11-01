@@ -40,5 +40,8 @@ public:
 
 	inline std::array<float, SQUARE_POINTS> GetPositions() const { return m_Positions; }
 	inline VertexArray GetVertexArray() { return m_VertexArray; }
+	inline glm::vec4* GetColor() { return &m_MeshRectangleAttributes.color; }
+	inline void SetColor(glm::vec4 color) { m_MeshRectangleAttributes.color = color; }
+
 
 };

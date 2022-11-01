@@ -36,7 +36,7 @@ void Renderer::OnEvent(EventType eventType, EventData eventData)
     {
         case EventType::KEYBOARD:
             Renderer::HandleKeyboardEvent(eventData);
-        case EventType::MOUSE:
+        case EventType::MOUSE_CLICK:
             Renderer::HandleMouseEvent(eventData);
         default:
             break;

@@ -11,6 +11,7 @@ private:
 	float m_Height;
 	float m_AspectRatio;
 	float m_ZoomLevel = 1.0f;
+	float m_ZoomMagnitude = 0.25f;
 	OrthographicCamera m_Camera;
 
 	bool m_Rotation;
@@ -29,10 +30,8 @@ public:
 	inline const OrthographicCamera& GetCamera() const { return m_Camera; }
 
 	inline float GetZoomLevel() const { return m_ZoomLevel; }
-	inline void SetZoomLevel(float level) { m_ZoomLevel = level; }
 
 protected:
-	void HandleWindowEvent(EventData eventData);
-	void HandleKeyboardEvent(EventData eventData);
-	void HandleMouseEvent(EventData eventData);
+	void HandleWindowResizeEvent(EventData eventData);
+	void HandleMouseScrollEvent(EventData eventData);
 };

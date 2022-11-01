@@ -3,7 +3,7 @@
 #include <Core/GLCore.h>
 #include <Core/Event.h>
 #include <Core/Window.h>
-
+#include <iostream>
 
 namespace GLEvent {
     // Window Events
@@ -15,7 +15,8 @@ namespace GLEvent {
         eventData.Window_Height = (float)height;
 
         Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
-        W_window->GetCameraController()->OnEvent(EventType::WINDOW, eventData);
+        W_window->OnEvent(EventType::WINDOW_RESIZE, eventData);
+        W_window->GetCameraController()->OnEvent(EventType::WINDOW_RESIZE, eventData);
     }
 
     // Keyboard Events
@@ -31,7 +32,7 @@ namespace GLEvent {
     }
 
     // Mouse Events
-    void CallbackOpenGLMouseEvent(GLFWwindow* GLFW_window, int button, int action, int mods)
+    void CallbackOpenGLMouseClickEvent(GLFWwindow* GLFW_window, int button, int action, int mods)
     {
         EventData eventData{};
         eventData.GLFW_Window = GLFW_window;
@@ -39,6 +40,19 @@ namespace GLEvent {
         eventData.Event_Action = action;
 
         Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
-        W_window->GetRenderer()->OnEvent(EventType::MOUSE, eventData);
+        W_window->GetRenderer()->OnEvent(EventType::MOUSE_CLICK, eventData);
     }
+
+    void CallbackOpenGLMouseScrollEvent(GLFWwindow* GLFW_window, double xoffset, double yoffset)
+    {
+        EventData eventData{};
+        eventData.GLFW_Window = GLFW_window;
+        eventData.Scroll_XOffset = xoffset;
+        eventData.Scroll_YOffset = yoffset;
+
+        Window* W_window = (Window*)glfwGetWindowUserPointer(GLFW_window);
+        W_window->GetCameraController()->OnEvent(EventType::MOUSE_SCROLL, eventData);
+        W_window->OnEvent(EventType::MOUSE_SCROLL, eventData);
+    }
+
 }
