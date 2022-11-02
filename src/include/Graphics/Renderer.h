@@ -13,6 +13,13 @@
 #include <Util/OrthographicCameraController.h>
 
 
+enum class MeshType
+{
+    NONE,
+    SQUARE
+};
+
+
 class Renderer
 {
 private:
@@ -27,6 +34,9 @@ public:
     void OnEvent(EventType eventType, EventData eventData);
 
     inline std::vector<MeshSquare*> GetMeshArray() { return m_MeshArray; }
+
+    bool ENABLE_CLICK = true;
+    MeshType SELECTED_MESH_TYPE = MeshType::NONE;
 protected:
     void HandleKeyboardEvent(EventData eventData);
     void HandleMouseEvent(EventData eventData);

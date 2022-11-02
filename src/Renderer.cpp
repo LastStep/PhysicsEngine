@@ -51,12 +51,7 @@ void Renderer::HandleKeyboardEvent(EventData eventData)
 
 void Renderer::HandleMouseEvent(EventData eventData)
 {
-    // Handling imgui input first
-    ImGuiIO& io = ImGui::GetIO();
-    io.AddMouseButtonEvent(eventData.Mouse_Button, eventData.Event_Action == GLFW_PRESS);
-
-    // Stopping event propogation from imgui to glfw
-    if (io.WantCaptureMouse) return;
+    if (!ENABLE_CLICK) return;
 
     if (eventData.Mouse_Button == GLFW_MOUSE_BUTTON_LEFT && eventData.Event_Action == GLFW_PRESS)
     {
@@ -67,6 +62,7 @@ void Renderer::HandleMouseEvent(EventData eventData)
         meshSquareAttr.position   = { (float)xpos, (float)ypos, 0.0f };
         meshSquareAttr.dimensions = { 100.05f, 100.05f };
 
-        m_MeshArray.push_back(new MeshSquare(meshSquareAttr));
+        if (SELECTED_MESH_TYPE == MeshType::SQUARE)
+            m_MeshArray.push_back(new MeshSquare(meshSquareAttr));
     }
 }

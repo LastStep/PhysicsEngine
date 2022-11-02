@@ -15,8 +15,8 @@
 class Window
 {
 private:
-	uint32_t m_Width  = 1280;
-	uint32_t m_Height = 720;
+	float m_Width  = 1280.0f;
+	float m_Height = 720.0f;
 	const char* m_Title = "Window";
 	Renderer m_Renderer;
 	GLFWwindow* m_Window;
@@ -31,8 +31,8 @@ public:
 
 	void OnEvent(EventType eventType, EventData eventData);
 
-	inline uint32_t		GetWidth()		const { return m_Width;		 }
-	inline uint32_t		GetHeight()		const { return m_Height;	 }
+	inline float		GetWidth()		const { return m_Width;		 }
+	inline float		GetHeight()		const { return m_Height;	 }
 	inline const char*  GetTitle()		const { return m_Title;		 }
 	inline ImVec4		GetClearColor() const { return m_ClearColor; }
 	inline Renderer* GetRenderer() { return &m_Renderer; }

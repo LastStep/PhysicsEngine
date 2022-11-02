@@ -1,5 +1,7 @@
 #include <Core/Window.h>
 #include <Core/GLEvents.h>
+#include <sstream>
+#include <string>
 
 Window::Window()
     : m_CameraController(m_Width, m_Height)
@@ -8,7 +10,7 @@ Window::Window()
     if (!glfwInit()) Window::Delete();
 
     /* Create a windowed mode window and its OpenGL context */
-    m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+    m_Window = glfwCreateWindow((int)m_Width, (int)m_Height, m_Title, NULL, NULL);
     if (!m_Window) Window::Delete();
 
     /* Make the window's context current */
@@ -85,30 +87,50 @@ void Window::Draw()
     ImGui::NewFrame();
 
     m_Renderer.Draw(&m_CameraController);
+    static bool show_app_main_menu_bar = false;
 
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
     ImGui::ShowDemoWindow();
 
     // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
     {
-        static float f = 0.0f;
-        static int counter = 0;
-
         std::vector<MeshSquare*> meshArray = m_Renderer.GetMeshArray();
 
         ImGui::Begin("Mesh Counter");          
         ImGui::Text("Number of Meshes = %d", meshArray.size());
-            //glm::vec4 meshColor = ;
+        
+        std::vector<float> positionX{};
         
         for (int i = 0; i < meshArray.size(); i++)
         {
-            ImGui::PushID(i);
-            ImGui::ColorEdit4("clear color", (float*)meshArray[i]->GetColor());
-            ImGui::PopID();
+            std::string menuName = "Mesh ";
+            int theInt = 5;
+            std::stringstream ss;
+            ss << menuName << meshArray[i]->GetID();
+            ImGui::MenuItem(ss.str().c_str(), NULL, &meshArray[i]->SHOW_IN_IMGUI);
+            
+            if (meshArray[i]->SHOW_IN_IMGUI)
+            {
+                ImGui::PushID(i);
+                ImGui::ColorEdit4("Mesh Color", (float*)meshArray[i]->GetColor());
+                ImGui::SliderFloat("Mesh Position X", &meshArray[i]->GetOffset()->x, -1.0f * m_Width / 2, m_Width / 2);
+                ImGui::SliderFloat("Mesh Position Y", &meshArray[i]->GetOffset()->y, -1.0f * m_Height / 2, m_Height / 2);
+                ImGui::PopID();
+            }
         }
 
-        //ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+        ImGui::End();
+    }
 
+    {
+        ImGui::Begin("Renderer");
+        ImGui::Checkbox("Enable Click to Draw", &m_Renderer.ENABLE_CLICK);
+        ImGui::BeginGroup();
+        if (ImGui::Button("None"))
+            m_Renderer.SELECTED_MESH_TYPE = MeshType::NONE;
+        if (ImGui::Button("Square"))
+            m_Renderer.SELECTED_MESH_TYPE = MeshType::SQUARE;
+        ImGui::EndGroup();
         ImGui::End();
     }
 
@@ -126,7 +148,7 @@ void Window::HandleWindowResizeEvent(EventData eventData)
 {
     m_Width = eventData.Window_Width;
     m_Height = eventData.Window_Height;
-    glViewport(0, 0, m_Width, m_Height);
+    glViewport(0, 0, (GLsizei)m_Width, (GLsizei)m_Height);
 }
 
 void Window::HandleMouseScrollEvent(EventData eventData)

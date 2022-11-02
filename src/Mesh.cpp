@@ -5,11 +5,10 @@
 #include <Graphics/VertexBufferLayout.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-
+#include <chrono>
+#include <iostream>
 MeshSquare::MeshSquare(MeshRectangleAttributes meshRectangleAttributes)
-    :   m_EntityID(0), 
-        m_MeshRectangleAttributes(meshRectangleAttributes),
+    :   m_MeshRectangleAttributes(meshRectangleAttributes),
         m_Positions({
             meshRectangleAttributes.position.x + meshRectangleAttributes.dimensions.x, meshRectangleAttributes.position.y + meshRectangleAttributes.dimensions.y,
             meshRectangleAttributes.position.x + meshRectangleAttributes.dimensions.x, meshRectangleAttributes.position.y - meshRectangleAttributes.dimensions.y,
@@ -18,6 +17,7 @@ MeshSquare::MeshSquare(MeshRectangleAttributes meshRectangleAttributes)
         }),
         m_Shader("Resources/Shaders/Basic.shader")
 {
+    m_EntityID = m_VertexArray.GetID();
     m_VertexArray.Bind();
     VertexBuffer v_VertexBuffer(&m_Positions, (unsigned int) m_Positions.size() * sizeof(float));
 
@@ -42,7 +42,8 @@ void MeshSquare::Draw(OrthographicCameraController* cameraController)
     m_Shader.Bind();
     m_Shader.SetUniform4fv("u_Color", m_MeshRectangleAttributes.color);
 
-    m_Shader.SetUniformMatrix4f("u_ViewProjection", cameraController->GetCamera().GetViewProjectionMatrix());
+    glm::mat4 MVP = glm::translate(cameraController->GetCamera().GetViewProjectionMatrix(), m_MeshRectangleAttributes.offset);
+    m_Shader.SetUniformMatrix4f("u_ViewProjection", MVP);
 
     m_VertexArray.Bind();
 

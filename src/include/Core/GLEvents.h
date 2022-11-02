@@ -34,6 +34,13 @@ namespace GLEvent {
     // Mouse Events
     void CallbackOpenGLMouseClickEvent(GLFWwindow* GLFW_window, int button, int action, int mods)
     {
+        // Handling imgui input first
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddMouseButtonEvent(button, action == GLFW_PRESS);
+
+        // Stopping event propogation from imgui
+        if (io.WantCaptureMouse) return;
+
         EventData eventData{};
         eventData.GLFW_Window = GLFW_window;
         eventData.Mouse_Button = button;
