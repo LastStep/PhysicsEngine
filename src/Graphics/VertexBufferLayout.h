@@ -1,7 +1,9 @@
 #pragma once
 
 #include <vector>
+
 #include <Core/GLCore.h>
+
 
 struct VertexBufferElement
 {

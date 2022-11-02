@@ -18,22 +18,22 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
+    <ClCompile Include="src\Graphics\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
+    <ClCompile Include="src\Graphics\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexBuffer.cpp">
+    <ClCompile Include="src\Graphics\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\IndexBuffer.cpp">
+    <ClCompile Include="src\Graphics\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
+    <ClCompile Include="src\Graphics\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mesh.cpp">
+    <ClCompile Include="src\Graphics\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\imgui\imgui.cpp">
@@ -57,39 +57,39 @@
     <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GLCore.cpp">
+    <ClCompile Include="src\Core\GLCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
+    <ClCompile Include="src\Core\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OrthographicCamera.cpp">
+    <ClCompile Include="src\Util\OrthographicCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OrthographicCameraController.cpp">
+    <ClCompile Include="src\Util\OrthographicCameraController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\include\Graphics\Shader.h">
+    <ClInclude Include="src\Graphics\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\Renderer.h">
+    <ClInclude Include="src\Graphics\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\VertexBuffer.h">
+    <ClInclude Include="src\Graphics\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\IndexBuffer.h">
+    <ClInclude Include="src\Graphics\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\VertexBufferLayout.h">
+    <ClInclude Include="src\Graphics\VertexBufferLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\VertexArray.h">
+    <ClInclude Include="src\Graphics\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Graphics\Mesh.h">
+    <ClInclude Include="src\Graphics\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\imgui\imconfig.h">
@@ -119,22 +119,25 @@
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Core\GLCore.h">
+    <ClInclude Include="src\Core\GLCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Core\Event.h">
+    <ClInclude Include="src\Core\Event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Core\Window.h">
+    <ClInclude Include="src\Core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Core\GLEvents.h">
+    <ClInclude Include="src\Core\GLEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Util\OrthographicCamera.h">
+    <ClInclude Include="src\Util\OrthographicCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Util\OrthographicCameraController.h">
+    <ClInclude Include="src\Util\OrthographicCameraController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

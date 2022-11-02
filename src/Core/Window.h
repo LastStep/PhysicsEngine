@@ -1,15 +1,13 @@
 #pragma once
 
-#include <string>
 #include <Core/GLCore.h>
+#include <Core/Event.h>
 #include <Graphics/Renderer.h>
 #include <Util/OrthographicCameraController.h>
-#include <Core/Event.h>
 
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
-
 
 
 class Window

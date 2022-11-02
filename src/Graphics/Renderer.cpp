@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <Graphics/Renderer.h>
 
 

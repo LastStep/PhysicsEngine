@@ -4,13 +4,12 @@
 #include <unordered_map>
 #include <optional>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <imgui.h>
-
+#include <Core/GLCore.h>
 #include <Core/Event.h>
 #include <Graphics/Mesh.h>
 #include <Util/OrthographicCameraController.h>
+
+#include <imgui.h>
 
 
 enum class MeshType

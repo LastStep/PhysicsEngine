@@ -3,7 +3,7 @@
 #include <Core/GLCore.h>
 #include <Core/Event.h>
 #include <Core/Window.h>
-#include <iostream>
+
 
 namespace GLEvent {
     // Window Events

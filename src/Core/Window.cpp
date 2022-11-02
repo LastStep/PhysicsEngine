@@ -1,7 +1,9 @@
-#include <Core/Window.h>
-#include <Core/GLEvents.h>
 #include <sstream>
 #include <string>
+
+#include <Core/Window.h>
+#include <Core/GLEvents.h>
+
 
 Window::Window()
     : m_CameraController(m_Width, m_Height)

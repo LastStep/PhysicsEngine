@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Util/OrthographicCamera.h>
 #include <Core/Event.h>
+#include <Util/OrthographicCamera.h>
 
 
 class OrthographicCameraController

@@ -2,8 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <array>
-#include <Graphics/Shader.h>
+
 #include <Core/GLCore.h>
+#include <Graphics/Shader.h>
 
 
 Shader::Shader(const std::string& filepath)

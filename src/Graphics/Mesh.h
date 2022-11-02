@@ -1,15 +1,14 @@
 #pragma once
 
-#include <iostream>
 #include <array>
-#include <vector>
+
 #include <Graphics/VertexArray.h>
 #include <Graphics/Shader.h>
-#include <glm/glm.hpp>
+#include <Physics/Core.h>
 #include <Util/OrthographicCameraController.h>
 
-int const SQUARE_POINTS = 8;
 
+int const SQUARE_POINTS = 8;
 
 struct MeshRectangleAttributes
 {
@@ -18,7 +17,6 @@ struct MeshRectangleAttributes
 	glm::vec3 offset = { 0.0f, 0.0f, 0.0f };
 	glm::vec4 color = { 0.8f, 0.2f, 0.4f, 1.0f };
 };
-
 
 class MeshSquare
 {

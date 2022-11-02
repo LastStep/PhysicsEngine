@@ -1,6 +1,7 @@
 #include <Graphics/IndexBuffer.h>
 #include <Core/GLCore.h>
 
+
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
     : m_RendererID(0), m_Count(count)
 {

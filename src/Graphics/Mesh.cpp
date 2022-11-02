@@ -1,12 +1,10 @@
-#include <Graphics/Mesh.h>
 #include <Core/GLCore.h>
+#include <Graphics/Mesh.h>
 #include <Graphics/VertexBuffer.h>
 #include <Graphics/IndexBuffer.h>
 #include <Graphics/VertexBufferLayout.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <chrono>
-#include <iostream>
+
+
 MeshSquare::MeshSquare(MeshRectangleAttributes meshRectangleAttributes)
     :   m_MeshRectangleAttributes(meshRectangleAttributes),
         m_Positions({
