@@ -29,6 +29,8 @@
     <ClCompile Include="src\Core\GLCore.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Physics\PhysicsObject.cpp" />
+    <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Util\OrthographicCamera.cpp" />
     <ClCompile Include="src\Util\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Graphics\Renderer.cpp" />

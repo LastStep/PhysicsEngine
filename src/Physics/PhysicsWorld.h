@@ -1,24 +1,23 @@
 #pragma once
 
-//class PhysicsWorld {
-//private:
-//	std::vector<Object*> m_objects;
-//	vector3 m_gravity = vector3(0, -9.81f, 0);
-//
-//public:
-//	void AddObject(Object* object) { /* ... */ }
-//	void RemoveObject(Object* object) { /* ... */ }
-//
-//	void Step(
-//		float dt)
-//	{
-//		for (Object* obj : m_objects) {
-//			obj->Force += obj->Mass * m_gravity; // apply a force
-//
-//			obj->Velocity += obj->Force / obj->Mass * dt;
-//			obj->Position += obj->Velocity * dt;
-//
-//			obj->Force = vector3(0, 0, 0); // reset net force at the end
-//		}
-//	}
-//};
+#include <memory>
+#include <vector>
+
+#include <glm/glm.hpp>
+#include <Physics/PhysicsObject.h>
+
+
+namespace Physics
+{
+	class PhysicsWorld {
+	private:
+		std::vector<Physics::PhysicsObject*> m_PhysicsObjects;
+		glm::vec3 m_gravity = { 0.0f, 9.81f, 0.0f };
+
+	public:
+		void AddObject(Physics::PhysicsObject* object);
+		void RemoveObject(Physics::PhysicsObject* object);
+
+		void Update(float ts);
+	};
+}

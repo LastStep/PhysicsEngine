@@ -6,7 +6,6 @@
 #include <Graphics/VertexArray.h>
 #include <Graphics/Shader.h>
 #include <Physics/Core.h>
-#include <Physics/PhysicsObject.h>
 #include <Util/OrthographicCameraController.h>
 
 
@@ -14,14 +13,14 @@ int const SQUARE_POINTS = 8;
 
 struct MeshAttributes
 {
-	glm::vec3 position;
-	glm::vec3 offset = { 0.0f, 0.0f, 0.0f };
-	glm::vec4 color = { 0.8f, 0.2f, 0.4f, 1.0f };
+	glm::vec3 Position;
+	glm::vec3 Offset = { 0.0f, 0.0f, 0.0f };
+	glm::vec4 Color = { 0.8f, 0.2f, 0.4f, 1.0f };
 };
 
 struct MeshRectangleAttributes : MeshAttributes
 {
-	glm::vec2 dimensions;
+	glm::vec2 Dimensions;
 };
 
 class Mesh
@@ -39,10 +38,12 @@ public:
 	{
 	};
 
-	virtual void Draw(std::shared_ptr<OrthographicCameraController> cameraController) = 0;
-	virtual glm::vec3 GetWorldPosition() = 0;
+	virtual void Draw(std::shared_ptr<OrthographicCameraController> cameraController, std::shared_ptr<Physics::PhysicsObject> physicsObject) = 0;
+	virtual glm::vec3 GetLocalPosition() = 0;
+	virtual glm::vec3 GetWorldPosition(std::shared_ptr<Physics::PhysicsObject> physicsObject) = 0;
 	virtual glm::vec4* GetColor() = 0;
 	virtual glm::vec3* GetOffset() = 0;
+	virtual void SetOffset(glm::vec3 offset) = 0;
 
 	inline unsigned int GetID() { return m_EntityID; }
 	inline std::shared_ptr<VertexArray> GetVertexArray() { return m_VertexArray; }
@@ -62,11 +63,13 @@ public:
 	MeshSquare(MeshRectangleAttributes meshRectangleAttributes);
 	~MeshSquare();
 
-	void Draw(std::shared_ptr<OrthographicCameraController> cameraController) override;
-	glm::vec3 GetWorldPosition() override;
+	void Draw(std::shared_ptr<OrthographicCameraController> cameraController, std::shared_ptr<Physics::PhysicsObject> physicsObject) override;
+	glm::vec3 GetLocalPosition() override;
+	glm::vec3 GetWorldPosition(std::shared_ptr<Physics::PhysicsObject> physicsObject) override;
 
 	inline std::array<float, SQUARE_POINTS> GetPositions() const { return m_Positions; }
 
-	inline glm::vec4* GetColor() override { return &m_MeshRectangleAttributes.color; }
-	inline glm::vec3* GetOffset() override { return &m_MeshRectangleAttributes.offset; }
+	inline glm::vec4* GetColor() override { return &m_MeshRectangleAttributes.Color; }
+	inline glm::vec3* GetOffset() override { return &m_MeshRectangleAttributes.Offset; }
+	inline void SetOffset(glm::vec3 offset) override { m_MeshRectangleAttributes.Offset = offset; }
 };

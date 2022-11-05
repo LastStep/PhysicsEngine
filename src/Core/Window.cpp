@@ -4,7 +4,6 @@
 #include <Core/Window.h>
 #include <Core/GLEvents.h>
 
-
 Window::Window()
     :   m_Renderer(std::make_shared<Renderer>()),
         m_CameraController(std::make_shared<OrthographicCameraController>(m_Width, m_Height))
@@ -90,7 +89,7 @@ void Window::Draw()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    m_Renderer->Draw(m_CameraController);
+    m_Renderer->Draw(m_TimeStep, m_CameraController);
 
     {
         std::vector<std::shared_ptr<Mesh>> meshArray = m_Renderer->GetMeshes();

@@ -2,15 +2,12 @@
 
 
 Renderer::Renderer()
+    : m_PhysicsWorld(std::make_shared<Physics::PhysicsWorld>())
 {
 }
 
 void Renderer::Delete()
 {
-    /*for (std::shared_ptr<Mesh> mesh : m_Meshes)
-    {
-        delete mesh;
-    }*/
     Renderer::~Renderer();
 }
 
@@ -21,11 +18,12 @@ void Renderer::Clear(std::optional<ImVec4> clearColor)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::Draw(std::shared_ptr<OrthographicCameraController> cameraController)
+void Renderer::Draw(float ts, std::shared_ptr<OrthographicCameraController> cameraController)
 {
-    for (std::shared_ptr<Mesh> mesh : m_Meshes)
+    m_PhysicsWorld->Update(ts);
+    for (int i = 0; i < m_Meshes.size(); i++)
     {
-        mesh->Draw(cameraController);
+        m_Meshes[i]->Draw(cameraController, m_PhysicsObjects[i]);
     }
 }
 
@@ -58,10 +56,15 @@ void Renderer::HandleMouseEvent(EventData eventData)
         glfwGetCursorPos(eventData.GLFW_Window, &xpos, &ypos);
 
         MeshRectangleAttributes meshRectangleAttr{};
-        meshRectangleAttr.position   = { (float)xpos, (float)ypos, 0.0f };
-        meshRectangleAttr.dimensions = { 20.0f, 20.0f };
+        meshRectangleAttr.Position   = { (float)xpos, (float)ypos, 0.0f };
+        meshRectangleAttr.Dimensions = { 20.0f, 20.0f };
 
         if (SELECTED_MESH_TYPE == MeshType::SQUARE)
-            m_Meshes.push_back(std::shared_ptr<Mesh>(std::make_shared<MeshSquare>(meshRectangleAttr)));
+        {
+            m_Meshes.push_back(std::shared_ptr<Mesh>(std::make_shared<MeshSquare>(meshRectangleAttr))); 
+            std::shared_ptr<Physics::PhysicsObject> physicsObject = std::make_shared<Physics::PhysicsObject>(meshRectangleAttr.Position);
+            m_PhysicsObjects.push_back(physicsObject);
+            m_PhysicsWorld->AddObject(physicsObject.get());
+        }
     }
 }
