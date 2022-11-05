@@ -60,6 +60,8 @@
     <ClInclude Include="src\Graphics\IndexBuffer.h" />
     <ClInclude Include="src\Graphics\VertexBufferLayout.h" />
     <ClInclude Include="src\Physics\Core.h" />
+    <ClInclude Include="src\Physics\PhysicsObject.h" />
+    <ClInclude Include="src\Physics\PhysicsWorld.h" />
     <ClInclude Include="src\Util\OrthographicCamera.h" />
     <ClInclude Include="src\Util\OrthographicCameraController.h" />
   </ItemGroup>

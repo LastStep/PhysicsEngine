@@ -7,10 +7,11 @@ Renderer::Renderer()
 
 void Renderer::Delete()
 {
-    for (MeshSquare* mesh : m_MeshArray)
+    /*for (std::shared_ptr<Mesh> mesh : m_Meshes)
     {
         delete mesh;
-    }
+    }*/
+    Renderer::~Renderer();
 }
 
 void Renderer::Clear(std::optional<ImVec4> clearColor)
@@ -20,9 +21,9 @@ void Renderer::Clear(std::optional<ImVec4> clearColor)
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Renderer::Draw(OrthographicCameraController* cameraController)
+void Renderer::Draw(std::shared_ptr<OrthographicCameraController> cameraController)
 {
-    for (MeshSquare* mesh : m_MeshArray)
+    for (std::shared_ptr<Mesh> mesh : m_Meshes)
     {
         mesh->Draw(cameraController);
     }
@@ -56,11 +57,11 @@ void Renderer::HandleMouseEvent(EventData eventData)
         double xpos, ypos;
         glfwGetCursorPos(eventData.GLFW_Window, &xpos, &ypos);
 
-        MeshRectangleAttributes meshSquareAttr{};
-        meshSquareAttr.position   = { (float)xpos, (float)ypos, 0.0f };
-        meshSquareAttr.dimensions = { 100.05f, 100.05f };
+        MeshRectangleAttributes meshRectangleAttr{};
+        meshRectangleAttr.position   = { (float)xpos, (float)ypos, 0.0f };
+        meshRectangleAttr.dimensions = { 20.0f, 20.0f };
 
         if (SELECTED_MESH_TYPE == MeshType::SQUARE)
-            m_MeshArray.push_back(new MeshSquare(meshSquareAttr));
+            m_Meshes.push_back(std::shared_ptr<Mesh>(std::make_shared<MeshSquare>(meshRectangleAttr)));
     }
 }

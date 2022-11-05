@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <Core/GLCore.h>
 #include <Core/Event.h>
 #include <Graphics/Renderer.h>
@@ -16,10 +18,10 @@ private:
 	float m_Width  = 1280.0f;
 	float m_Height = 720.0f;
 	const char* m_Title = "Window";
-	Renderer m_Renderer;
+	std::shared_ptr<Renderer> m_Renderer;
 	GLFWwindow* m_Window;
 	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); 
-	OrthographicCameraController m_CameraController;
+	std::shared_ptr<OrthographicCameraController> m_CameraController;
 
 public:
 	Window();
@@ -33,8 +35,8 @@ public:
 	inline float		GetHeight()		const { return m_Height;	 }
 	inline const char*  GetTitle()		const { return m_Title;		 }
 	inline ImVec4		GetClearColor() const { return m_ClearColor; }
-	inline Renderer* GetRenderer() { return &m_Renderer; }
-	inline OrthographicCameraController* GetCameraController() { return &m_CameraController; }
+	inline std::shared_ptr<Renderer> GetRenderer() { return m_Renderer; }
+	inline std::shared_ptr<OrthographicCameraController> GetCameraController() { return m_CameraController; }
 
 protected:
 	void Draw();

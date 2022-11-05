@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <optional>
+#include <memory>
 
 #include <Core/GLCore.h>
 #include <Core/Event.h>
@@ -22,17 +23,17 @@ enum class MeshType
 class Renderer
 {
 private:
-    std::vector<MeshSquare*> m_MeshArray;
+    std::vector<std::shared_ptr<Mesh>> m_Meshes;
 	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 public:
     Renderer();
     void Delete();
     void Clear(std::optional<ImVec4> clearColor = std::nullopt);
-    void Draw(OrthographicCameraController* cameraController);
+    void Draw(std::shared_ptr<OrthographicCameraController> cameraController);
     void OnEvent(EventType eventType, EventData eventData);
 
-    inline std::vector<MeshSquare*> GetMeshArray() { return m_MeshArray; }
+    inline std::vector<std::shared_ptr<Mesh>> GetMeshes() { return m_Meshes; }
 
     bool ENABLE_CLICK = true;
     MeshType SELECTED_MESH_TYPE = MeshType::NONE;
