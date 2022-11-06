@@ -35,14 +35,12 @@ MeshSquare::~MeshSquare()
 {
 }
 
-void MeshSquare::Draw(std::shared_ptr<OrthographicCameraController> cameraController, std::shared_ptr<Physics::PhysicsObject> physicsObject)
+void MeshSquare::Draw(OrthographicCameraController* cameraController)
 {
     m_Shader->Bind();
     m_Shader->SetUniform4fv("u_Color", m_MeshRectangleAttributes.Color);
 
-    glm::vec3 worldPosition = GetWorldPosition(physicsObject) - m_MeshRectangleAttributes.Position;
-
-    glm::mat4 MVP = glm::translate(cameraController->GetCamera().GetViewProjectionMatrix(), worldPosition);
+    glm::mat4 MVP = glm::translate(cameraController->GetCamera().GetViewProjectionMatrix(), m_MeshTransform.Position - m_MeshRectangleAttributes.Position);
     m_Shader->SetUniformMatrix4f("u_ViewProjection", MVP);
 
     m_VertexArray->Bind();
@@ -50,15 +48,4 @@ void MeshSquare::Draw(std::shared_ptr<OrthographicCameraController> cameraContro
 	GLCall(glDrawElements(GL_TRIANGLES, (GLsizei)m_Indices.size(), GL_UNSIGNED_INT, 0));
 }
 
-glm::vec3 MeshSquare::GetLocalPosition()
-{
-    glm::vec3 o_LocalPosition = m_MeshRectangleAttributes.Position + m_MeshRectangleAttributes.Offset;
-    return o_LocalPosition;
-}
-
-glm::vec3 MeshSquare::GetWorldPosition(std::shared_ptr<Physics::PhysicsObject> physicsObject)
-{
-    glm::vec3 o_WorldPosition = physicsObject->GetPosition() + m_MeshRectangleAttributes.Offset;
-    return o_WorldPosition;
-}
 

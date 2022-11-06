@@ -89,7 +89,7 @@ void Window::Draw()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    m_Renderer->Draw(m_TimeStep, m_CameraController);
+    m_Renderer->Draw(m_TimeStep, m_CameraController.get());
 
     {
         std::vector<std::shared_ptr<Mesh>> meshArray = m_Renderer->GetMeshes();
@@ -108,10 +108,10 @@ void Window::Draw()
             
             if (meshArray[i]->SHOW_IN_IMGUI)
             {
-                ImGui::PushID(i);
+                ImGui::PushID(meshArray[i]->GetID());
                 ImGui::ColorEdit4("Mesh Color", (float*)meshArray[i]->GetColor());
-                ImGui::SliderFloat("Mesh Position X", &meshArray[i]->GetOffset()->x, -1.0f * m_Width  / 2, m_Width  / 2);
-                ImGui::SliderFloat("Mesh Position Y", &meshArray[i]->GetOffset()->y, -1.0f * m_Height / 2, m_Height / 2);
+                if (ImGui::Button("Delete"))
+                    m_Renderer->RemoveObject(meshArray[i]->GetID());
                 ImGui::PopID();
             }
         }
@@ -127,6 +127,8 @@ void Window::Draw()
             m_Renderer->SELECTED_MESH_TYPE = MeshType::NONE;
         if (ImGui::Button("Square"))
             m_Renderer->SELECTED_MESH_TYPE = MeshType::SQUARE;
+        if (ImGui::Button("STATIC"))
+            m_Renderer->SELECTED_STATIC = !m_Renderer->SELECTED_STATIC;
         ImGui::EndGroup();
         ImGui::End();
     }

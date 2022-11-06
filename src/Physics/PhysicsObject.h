@@ -15,6 +15,8 @@ namespace Physics
 		glm::vec3 m_Force = { 0.0f, 0.0f, 0.0f };
 
 	public:
+		bool IS_STATIC = false;
+
 		PhysicsObject(glm::vec3 postion);
 		~PhysicsObject();
 

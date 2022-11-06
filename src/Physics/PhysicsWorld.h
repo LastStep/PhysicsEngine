@@ -18,6 +18,6 @@ namespace Physics
 		void AddObject(Physics::PhysicsObject* object);
 		void RemoveObject(Physics::PhysicsObject* object);
 
-		void Update(float ts);
+		void Step(float ts);
 	};
 }

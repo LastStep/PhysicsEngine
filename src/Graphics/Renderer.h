@@ -32,13 +32,17 @@ public:
     Renderer();
     void Delete();
     void Clear(std::optional<ImVec4> clearColor = std::nullopt);
-    void Draw(float ts, std::shared_ptr<OrthographicCameraController> cameraController);
+    void Draw(float ts, OrthographicCameraController* cameraController);
+
+    void AddObject(MeshType meshType, void* meshAttr);
+    void RemoveObject(unsigned int objectID);
     void OnEvent(EventType eventType, EventData eventData);
 
     inline std::vector<std::shared_ptr<Mesh>> GetMeshes() { return m_Meshes; }
 
     bool ENABLE_CLICK = true;
     MeshType SELECTED_MESH_TYPE = MeshType::NONE;
+    bool SELECTED_STATIC = false;
 
 protected:
     void HandleKeyboardEvent(EventData eventData);
