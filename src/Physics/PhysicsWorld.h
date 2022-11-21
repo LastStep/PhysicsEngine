@@ -9,10 +9,17 @@
 
 namespace Physics
 {
-	class PhysicsWorld {
+	class PhysicsWorld 
+	{
 	private:
 		std::vector<Physics::PhysicsObject*> m_PhysicsObjects;
-		glm::vec3 m_gravity = { 0.0f, 9.81f, 0.0f };
+
+		struct WorldConstants
+		{
+			glm::vec3 Gravity = { 0.0f, 9.81f, 0.0f };
+			float SpeedFactor = 50.0f;
+		};
+		WorldConstants m_WorldConstants{};
 
 	public:
 		void AddObject(Physics::PhysicsObject* object);

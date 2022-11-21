@@ -9,14 +9,16 @@
 #include <Core/Event.h>
 #include <Graphics/Mesh.h>
 #include <Util/OrthographicCameraController.h>
+#include <Util/Timestep.h>
+
 #include <Physics/Core.h>
 #include <imgui.h>
 
 
-enum class MeshType
+enum MeshType
 {
     NONE,
-    SQUARE
+    RECTANGLE
 };
 
 
@@ -32,7 +34,7 @@ public:
     Renderer();
     void Delete();
     void Clear(std::optional<ImVec4> clearColor = std::nullopt);
-    void Draw(float ts, OrthographicCameraController* cameraController);
+    void Draw(Timestep ts, OrthographicCameraController* cameraController);
 
     void AddObject(MeshType meshType, void* meshAttr);
     void RemoveObject(unsigned int objectID);

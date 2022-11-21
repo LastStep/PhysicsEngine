@@ -23,7 +23,7 @@ private:
 	ImVec4 m_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f); 
 	std::shared_ptr<OrthographicCameraController> m_CameraController;
 
-	float m_TimeStep = 0.05f;
+	float m_LastFrameTime = 0.0f;
 
 public:
 	Window();

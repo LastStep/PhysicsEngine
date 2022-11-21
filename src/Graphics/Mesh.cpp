@@ -3,16 +3,16 @@
 #include <Graphics/VertexBuffer.h>
 #include <Graphics/IndexBuffer.h>
 #include <Graphics/VertexBufferLayout.h>
-#include <iostream>
 
-MeshSquare::MeshSquare(MeshRectangleAttributes meshRectangleAttributes)
+
+MeshRectangle::MeshRectangle(MeshRectangleAttributes meshRectangleAttributes)
     :   Mesh("Resources/Shaders/Basic.shader"),
         m_MeshRectangleAttributes(meshRectangleAttributes),
         m_Positions({
-            meshRectangleAttributes.Position.x + meshRectangleAttributes.Dimensions.x / 2, meshRectangleAttributes.Position.y + meshRectangleAttributes.Dimensions.y / 2,
-            meshRectangleAttributes.Position.x + meshRectangleAttributes.Dimensions.x / 2, meshRectangleAttributes.Position.y - meshRectangleAttributes.Dimensions.y / 2,
-            meshRectangleAttributes.Position.x - meshRectangleAttributes.Dimensions.x / 2, meshRectangleAttributes.Position.y - meshRectangleAttributes.Dimensions.y / 2,
-            meshRectangleAttributes.Position.x - meshRectangleAttributes.Dimensions.x / 2, meshRectangleAttributes.Position.y + meshRectangleAttributes.Dimensions.y / 2,
+            meshRectangleAttributes.Position.x + meshRectangleAttributes.Scale.x, meshRectangleAttributes.Position.y + meshRectangleAttributes.Scale.y,
+            meshRectangleAttributes.Position.x + meshRectangleAttributes.Scale.x, meshRectangleAttributes.Position.y - meshRectangleAttributes.Scale.y,
+            meshRectangleAttributes.Position.x - meshRectangleAttributes.Scale.x, meshRectangleAttributes.Position.y - meshRectangleAttributes.Scale.y,
+            meshRectangleAttributes.Position.x - meshRectangleAttributes.Scale.x, meshRectangleAttributes.Position.y + meshRectangleAttributes.Scale.y,
         })
 {
     m_EntityID = m_VertexArray->GetID();
@@ -31,11 +31,11 @@ MeshSquare::MeshSquare(MeshRectangleAttributes meshRectangleAttributes)
     v_IndexBuffer.Unbind();
 }
 
-MeshSquare::~MeshSquare()
+MeshRectangle::~MeshRectangle()
 {
 }
 
-void MeshSquare::Draw(OrthographicCameraController* cameraController)
+void MeshRectangle::Draw(OrthographicCameraController* cameraController)
 {
     m_Shader->Bind();
     m_Shader->SetUniform4fv("u_Color", m_MeshRectangleAttributes.Color);

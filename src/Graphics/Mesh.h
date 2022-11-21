@@ -9,8 +9,6 @@
 #include <Util/OrthographicCameraController.h>
 
 
-int const SQUARE_POINTS = 8;
-
 struct MeshTransform
 {
 	glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
@@ -25,7 +23,7 @@ struct MeshAttributes
 
 struct MeshRectangleAttributes : MeshAttributes
 {
-	glm::vec2 Dimensions;
+	glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
 };
 
 class Mesh
@@ -51,19 +49,19 @@ public:
 	inline std::shared_ptr<VertexArray> GetVertexArray() { return m_VertexArray; }
 };
 
-class MeshSquare : public Mesh
+class MeshRectangle : public Mesh
 {
 private:
 	MeshRectangleAttributes m_MeshRectangleAttributes;
-	std::array<float, SQUARE_POINTS>  m_Positions;
+	std::array<float, 8>  m_Positions;
 	std::array<unsigned int, 6> m_Indices = {
 		0, 1, 2,
 		2, 3, 0
 	};
 
 public:
-	MeshSquare(MeshRectangleAttributes meshRectangleAttributes);
-	~MeshSquare();
+	MeshRectangle(MeshRectangleAttributes meshRectangleAttributes);
+	~MeshRectangle();
 
 	void Draw(OrthographicCameraController* cameraController) override;
 	inline glm::vec4* GetColor() override { return &m_MeshRectangleAttributes.Color; }

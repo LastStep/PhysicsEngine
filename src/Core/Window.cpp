@@ -3,6 +3,8 @@
 
 #include <Core/Window.h>
 #include <Core/GLEvents.h>
+#include <Util/Timestep.h>
+
 
 Window::Window()
     :   m_Renderer(std::make_shared<Renderer>()),
@@ -83,13 +85,17 @@ void Window::OnEvent(EventType eventType, EventData eventData)
 
 void Window::Draw()
 {
+    float time = (float)glfwGetTime();
+    Timestep timestep = time - m_LastFrameTime;
+    m_LastFrameTime = time;
+
     m_Renderer->Clear(m_ClearColor);
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    m_Renderer->Draw(m_TimeStep, m_CameraController.get());
+    m_Renderer->Draw(timestep, m_CameraController.get());
 
     {
         std::vector<std::shared_ptr<Mesh>> meshArray = m_Renderer->GetMeshes();
@@ -123,12 +129,21 @@ void Window::Draw()
         ImGui::Begin("Renderer");
         ImGui::Checkbox("Enable Click to Draw", &m_Renderer->ENABLE_CLICK);
         ImGui::BeginGroup();
-        if (ImGui::Button("None"))
-            m_Renderer->SELECTED_MESH_TYPE = MeshType::NONE;
-        if (ImGui::Button("Square"))
-            m_Renderer->SELECTED_MESH_TYPE = MeshType::SQUARE;
-        if (ImGui::Button("STATIC"))
-            m_Renderer->SELECTED_STATIC = !m_Renderer->SELECTED_STATIC;
+        
+        static int imgui_SelectedMeshType = MeshType::NONE;
+        static bool imgui_ShowMenuRectange = false;
+        
+        ImGui::RadioButton("None", &imgui_SelectedMeshType, MeshType::NONE);
+
+        ImGui::MenuItem("Rectange", NULL, &imgui_ShowMenuRectange);
+        if (imgui_ShowMenuRectange)
+        {
+            ImGui::RadioButton("Draw", &imgui_SelectedMeshType, MeshType::RECTANGLE);
+            ImGui::Checkbox("Static", &m_Renderer->SELECTED_STATIC);
+        }
+
+        m_Renderer->SELECTED_MESH_TYPE = (MeshType)imgui_SelectedMeshType;
+
         ImGui::EndGroup();
         ImGui::End();
     }
