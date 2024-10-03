@@ -1,7 +1,3 @@
-# PhysicsEngine
-
-A 2D physics engine, written in C++
-
 ## Demo
 
 https://github.com/user-attachments/assets/1126859d-6fbf-4ebd-840d-c191f4ae2a49
